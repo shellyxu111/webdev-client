@@ -4,7 +4,7 @@ export default function Labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
-      <p>Shelly Xu</p>
+      <p>Shelly Xu (Beiyi Xu)</p>
       <p>
         <a id="wd-github" href="https://github.com/shellyxu111/webdev-client">
           GitHub repository
