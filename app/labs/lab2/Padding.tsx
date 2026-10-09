@@ -14,7 +14,7 @@ export default function Padding() {
         <div id="wd-ai-padded" className="wd-ai-padded-top">
           Padded top only
         </div>
-        <div className="wd-your-padding-right wd-border-fat wd-border-red wd-border-solid wd-bg-color-yellow">
+        <div id="wd-your-padding" className="wd-your-padding-right wd-border-fat wd-border-red wd-border-solid wd-bg-color-yellow">
           My box with padding on the right
         </div>
       </div>

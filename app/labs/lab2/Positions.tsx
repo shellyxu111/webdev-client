@@ -18,7 +18,10 @@ export default function Positions() {
           >
             Nudged down and left
           </div>
-          <div className="wd-your-relative wd-dimension-square wd-bg-color-green wd-fg-color-white">
+          <div
+            id="wd-your-relative"
+            className="wd-your-relative wd-dimension-square wd-bg-color-green wd-fg-color-white"
+          >
             My relative box
           </div>
         </div>
@@ -42,7 +45,7 @@ export default function Positions() {
           >
             Bottom right
           </div>
-          <div className="wd-your-absolute wd-bg-color-green wd-fg-color-white wd-dimension-square">
+          <div id="wd-your-absolute" className="wd-your-absolute wd-bg-color-green wd-fg-color-white wd-dimension-square">
             My absolute box
           </div>
         </div>
@@ -69,7 +72,7 @@ export default function Positions() {
         >
           AI fixed
         </div>
-        <div className="wd-your-fixed wd-dimension-square wd-bg-color-green wd-fg-color-white">
+        <div id="wd-your-fixed" className="wd-your-fixed wd-dimension-square wd-bg-color-green wd-fg-color-white">
           My fixed position
         </div>
       </div>

@@ -29,7 +29,7 @@ export default function GridLayout() {
             <h3>Right two thirds</h3>
           </div>
         </div>
-        <div className="wd-grid-row">
+        <div id="wd-your-grid" className="wd-grid-row">
             <div className="wd-grid-col-two-thirds-page wd-bg-color-green">
                 <h3>My left two thirds column</h3>
             </div>

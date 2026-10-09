@@ -34,7 +34,7 @@ export default function Lab2() {
         Although it&apos;s very convenient it is considered bad practice and you
         should avoid using the style attribute
       </p>
-      <p style={{ backgroundColor: "green", color: "yellow" }}>
+      <p id="wd-your-style-attr" style={{ backgroundColor: "green", color: "yellow" }}>
         Style attribute allows configuring look and feel right on the element.
         Although it&apos;s very convenient it is considered bad practice and you
         should avoid using the style attribute
@@ -76,11 +76,11 @@ export default function Lab2() {
         <h4 className="wd-ai-class-selector">
           This heading has same style as paragraph above
         </h4>
-        <p className="wd-your-class">
+        <p id="wd-your-class-p" className="wd-your-class">
           This is a paragraph with a different class and a different look and
           feel
         </p>
-        <h4 className="wd-your-class">
+        <h4 id="wd-your-class-heading" className="wd-your-class">
           This heading has same style as paragraph above
         </h4>
       </div>
@@ -109,7 +109,7 @@ export default function Lab2() {
                 This span is a descendant of .wd-selector-1 at any depth
               </span>
               <br />
-              <span className="wd-your-selector">
+              <span id="wd-your-selector" className="wd-your-selector">
                 This is a span with a different class and a different look and
                 feel
               </span>
@@ -147,6 +147,10 @@ export default function Lab2() {
       <Flex />
       <MediaQueriesDemo />
       <ReactIconsSampler />
+
+      <p>
+        <a href="/labs/lab2/tailwind">Open Tailwind CSS lab →</a>
+      </p>
     </div>
   );
 }

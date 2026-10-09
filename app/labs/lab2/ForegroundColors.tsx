@@ -11,7 +11,7 @@ export default function ForegroundColors() {
           A nested element can override its parent&apos;s color, so{" "}
           <span className="wd-fg-color-black">this span is black</span>
         </p>
-        <p id="wd-your-fg" className="wd-fg-color-black">
+        <p id="wd-your-fg" className="wd-fg-color-green">
             This paragraph has a green foreground color but{" "}
             <span className="wd-fg-color-blue">this text is blue</span>
         </p>

@@ -16,7 +16,7 @@ export default function Float() {
         {LOREM} {LOREM}
         <img className="wd-float-left" src={STARSHIP} alt="Starship" />
         {LOREM} {LOREM}
-        <img className="wd-float-left" src="/images/shibainu.jpg" alt="Shiba Inu" />
+        <img id="wd-your-float" className="wd-float-left" src="/images/shibainu.jpg" alt="Shiba Inu" />
         {LOREM} {LOREM}
         <div className="wd-float-done" />
       </div>

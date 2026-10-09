@@ -33,7 +33,7 @@ export default function Display() {
         <div id="wd-ai-display" className="wd-display-inline wd-bg-color-green wd-fg-color-white">
           Inline div sample
         </div>
-        <div className="wd-display-inline wd-bg-color-yellow">
+        <div id="wd-your-display" className="wd-display-inline wd-bg-color-yellow">
           My inline div
         </div>
       </div>

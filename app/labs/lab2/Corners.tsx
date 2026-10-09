@@ -20,7 +20,7 @@ export default function Corners() {
       >
         Rounded corners on the left only
       </p>
-      <p className="wd-your-rounded-corners wd-border-thin wd-border-blue wd-border-solid wd-padding-fat">
+      <p id="wd-your-corners" className="wd-your-rounded-corners wd-border-thin wd-border-blue wd-border-solid wd-padding-fat">
         My rounded corners
       </p>
     </div>
