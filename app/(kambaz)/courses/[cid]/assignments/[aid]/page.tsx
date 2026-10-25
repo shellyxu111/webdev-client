@@ -1,11 +1,14 @@
 import Link from "next/link";
+import * as db from "../../../../database";
 
 export default async function AssignmentEditor({
   params,
 }: {
-  params: Promise<{ cid: string }>;
+  params: Promise<{ cid: string; aid: string }>;
 }) {
-  const { cid } = await params;
+  const { cid, aid } = await params;
+  const assignment = db.assignments.find((a) => a._id === aid);
+
   return (
     <div id="wd-assignments-editor" className="w-full max-w-3xl">
       <div className="mb-4">
@@ -14,10 +17,14 @@ export default async function AssignmentEditor({
         </label>
         <input
           id="wd-name"
-          defaultValue="A1 - ENV + HTML"
+          defaultValue={assignment?.title ?? ""}
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
         />
+        <p id="wd-assignment-id" className="mt-2 text-sm text-neutral-600">
+          Assignment id: {aid}
+        </p>
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="wd-description"
@@ -28,10 +35,11 @@ export default async function AssignmentEditor({
         <textarea
           id="wd-description"
           rows={10}
-          defaultValue="The assignment is available online. Submit a link to the landing page of your Web application running on Vercel. The landing page should include the following: Your full name and section, Links to each of the lab assignments, Link to the Kambaz application, Links to all relevant source code repositories. The Kambaz application should include a link to navigate back to the landing page."
+          defaultValue={assignment?.description ?? ""}
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
         />
       </div>
+
       <div className="mb-4 grid items-center gap-2 md:grid-cols-[160px_1fr]">
         <label
           htmlFor="wd-points"
@@ -42,10 +50,11 @@ export default async function AssignmentEditor({
         <input
           id="wd-points"
           type="number"
-          defaultValue={100}
+          defaultValue={assignment?.points ?? 100}
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
         />
       </div>
+
       <div className="mb-4 grid items-center gap-2 md:grid-cols-[160px_1fr]">
         <label htmlFor="wd-group" className="text-sm font-medium md:text-right">
           Assignment Group
@@ -61,6 +70,7 @@ export default async function AssignmentEditor({
           <option value="PROJECT">PROJECT</option>
         </select>
       </div>
+
       <div className="mb-4 grid items-center gap-2 md:grid-cols-[160px_1fr]">
         <label
           htmlFor="wd-display-grade-as"
@@ -78,6 +88,7 @@ export default async function AssignmentEditor({
           <option value="LETTER">Letter Grade</option>
         </select>
       </div>
+
       <div className="mb-4 grid items-start gap-2 md:grid-cols-[160px_1fr]">
         <label
           htmlFor="wd-submission-type"
@@ -155,6 +166,7 @@ export default async function AssignmentEditor({
           </div>
         </div>
       </div>
+
       <div className="mb-4 grid items-start gap-2 md:grid-cols-[160px_1fr]">
         <div className="pt-2 text-sm font-medium md:text-right">Assign</div>
 
@@ -192,7 +204,9 @@ export default async function AssignmentEditor({
             <input
               type="datetime-local"
               id="wd-due-date"
-              defaultValue="2024-05-13T23:59"
+              defaultValue={
+                assignment?.due ? `${assignment.due}T23:59` : ""
+              }
               className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
             />
           </div>
@@ -208,7 +222,11 @@ export default async function AssignmentEditor({
               <input
                 type="datetime-local"
                 id="wd-available-from"
-                defaultValue="2024-05-06T00:00"
+                defaultValue={
+                  assignment?.available
+                    ? `${assignment.available}T00:00`
+                    : ""
+                }
                 className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
               />
             </div>
@@ -230,6 +248,7 @@ export default async function AssignmentEditor({
           </div>
         </div>
       </div>
+
       <div className="mb-4">
         <label
           htmlFor="wd-ai-editor-notes"
@@ -244,6 +263,7 @@ export default async function AssignmentEditor({
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
         />
       </div>
+
       <hr className="my-6 border-neutral-200" />
 
       <div className="flex justify-end gap-2">
