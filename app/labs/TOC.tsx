@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import "./lab2/tailwind/utilities.css";
 
 const LINKS = [
   {
@@ -32,7 +33,7 @@ const LINKS = [
     href: "/labs/lab4",
     id: "wd-lab4-link",
     label: "Lab 4",
-    match: () => false,
+    match: (p: string) => p.includes("/lab4"),
   },
   {
     href: "/labs/lab5",
@@ -60,14 +61,6 @@ const LINKS = [
   },
 ] as const;
 
-const activeStyle = {
-  backgroundColor: "#2563eb",
-  color: "white",
-  borderRadius: "4px",
-  padding: "2px 8px",
-  textDecoration: "none",
-};
-
 export default function TOC() {
   const pathname = usePathname() ?? "";
 
@@ -83,7 +76,11 @@ export default function TOC() {
               <Link
                 href={link.href}
                 id={link.id}
-                style={active ? activeStyle : undefined}
+                className={
+                  active
+                    ? "rounded bg-blue-600 px-2 py-0.5 text-white no-underline"
+                    : ""
+                }
                 aria-current={active ? "page" : undefined}
               >
                 {link.label}
