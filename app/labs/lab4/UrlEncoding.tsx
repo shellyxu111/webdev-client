@@ -52,7 +52,7 @@ export default function UrlEncoding() {
         value={c}
         onChange={(e) => setC(e.target.value)}
         className="mb-3 block w-full rounded border border-neutral-300 px-3 py-1.5"
-        id="wd-your-url-c"
+        id="wd-url-c"
       />
       <h4>Programmatic navigation (using router.push):</h4>
       <button
