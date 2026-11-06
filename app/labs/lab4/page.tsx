@@ -15,6 +15,7 @@ import ProfileForm from "./profile/ProfileForm";
 import ParentStateComponent from "./ParentStateComponent";
 import PropDrilling from "./PropDrilling";
 import UrlEncoding from "./UrlEncoding";
+import ContextExamples from "./context/ContextExamples";
 export default function Lab4() {
   const sayHello = (message: string) => {
     alert(message);
@@ -47,6 +48,7 @@ export default function Lab4() {
       <ParentStateComponent />
       <PropDrilling />
       <UrlEncoding />
+      <ContextExamples />
     </div>
   );
 }
