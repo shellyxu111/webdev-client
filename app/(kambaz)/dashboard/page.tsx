@@ -110,10 +110,10 @@ export default function Dashboard() {
           value={course.startDate}
           onChange={(e) => setCourse({ ...course, startDate: e.target.value })}
         />
+          <hr />
         </>
       )}
 
-      <hr />
       <h2 id="wd-dashboard-published">
         Published Courses ({visibleCourses.length})
       </h2>
