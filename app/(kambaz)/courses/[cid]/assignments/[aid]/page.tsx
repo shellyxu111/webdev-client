@@ -1,23 +1,73 @@
-import Link from "next/link";
-import * as db from "../../../../database";
+"use client";
 
-export default async function AssignmentEditor({
-  params,
-}: {
-  params: Promise<{ cid: string; aid: string }>;
-}) {
-  const { cid, aid } = await params;
-  const assignment = db.assignments.find((a) => a._id === aid);
+import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import type { SubmitEvent } from "react";
+import { useAssignmentsStore } from "../../../../store/assignmentsStore";
+import { useAccountContext } from "../../../../account/AccountContext";
+
+export default function AssignmentEditor() {
+  const { cid, aid } = useParams<{ cid: string; aid: string }>();
+  const router = useRouter();
+  const isNew = aid === "new";
+  const listHref = `/courses/${cid}/assignments`;
+  const { currentUser } = useAccountContext();
+  const canManageAssignments =
+    !currentUser || currentUser.role === "FACULTY" || currentUser.role === "ADMIN";
+
+  const addAssignment = useAssignmentsStore((state) => state.addAssignment);
+  const updateAssignment = useAssignmentsStore(
+    (state) => state.updateAssignment,
+  );
+  const assignment = useAssignmentsStore((state) =>
+    state.assignments.find((item) => item._id === aid && item.course === cid),
+  );
+
+  function saveAssignment(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!canManageAssignments) return;
+
+    const fields = new FormData(event.currentTarget);
+    const title = String(fields.get("title") ?? "").trim();
+    if (!title) return;
+
+    const changes = {
+      title,
+      description: String(fields.get("description") ?? ""),
+      points: Number(fields.get("points") ?? 0),
+      due: String(fields.get("due") ?? ""),
+      available: String(fields.get("available") ?? ""),
+      until: String(fields.get("until") ?? ""),
+    };
+
+    if (isNew) {
+      addAssignment({ ...changes, course: cid });
+    } else if (assignment) {
+      updateAssignment({ ...assignment, ...changes });
+    } else {
+      return;
+    }
+
+    router.push(listHref);
+  }
 
   return (
-    <div id="wd-assignments-editor" className="w-full max-w-3xl">
+    <form
+      key={`${cid}/${aid}`}
+      id="wd-assignments-editor"
+      className="w-full max-w-3xl"
+      onSubmit={saveAssignment}
+    >
+      <fieldset disabled={!canManageAssignments} className="m-0 min-w-0 border-0 p-0">
       <div className="mb-4">
         <label htmlFor="wd-name" className="mb-2 block text-sm font-medium">
           Assignment Name
         </label>
         <input
           id="wd-name"
+          name="title"
           defaultValue={assignment?.title ?? ""}
+          required
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
         />
         <p id="wd-assignment-id" className="mt-2 text-sm text-neutral-600">
@@ -34,6 +84,7 @@ export default async function AssignmentEditor({
         </label>
         <textarea
           id="wd-description"
+          name="description"
           rows={10}
           defaultValue={assignment?.description ?? ""}
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
@@ -49,6 +100,7 @@ export default async function AssignmentEditor({
         </label>
         <input
           id="wd-points"
+          name="points"
           type="number"
           defaultValue={assignment?.points ?? 100}
           className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
@@ -204,8 +256,11 @@ export default async function AssignmentEditor({
             <input
               type="datetime-local"
               id="wd-due-date"
+              name="due"
               defaultValue={
-                assignment?.due ? `${assignment.due}T23:59` : ""
+                assignment?.due && !assignment.due.includes("T")
+                  ? `${assignment.due}T23:59`
+                  : (assignment?.due ?? "")
               }
               className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
             />
@@ -222,10 +277,11 @@ export default async function AssignmentEditor({
               <input
                 type="datetime-local"
                 id="wd-available-from"
+                name="available"
                 defaultValue={
-                  assignment?.available
+                  assignment?.available && !assignment.available.includes("T")
                     ? `${assignment.available}T00:00`
-                    : ""
+                    : (assignment?.available ?? "")
                 }
                 className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
               />
@@ -241,7 +297,8 @@ export default async function AssignmentEditor({
               <input
                 type="datetime-local"
                 id="wd-available-until"
-                defaultValue="2024-05-20T23:59"
+                name="until"
+                defaultValue={assignment?.until ?? ""}
                 className="w-full rounded border border-neutral-300 bg-white px-3 py-2"
               />
             </div>
@@ -274,14 +331,15 @@ export default async function AssignmentEditor({
         >
           Cancel
         </Link>
-        <Link
-          href={`/courses/${cid}/assignments`}
+        {canManageAssignments && <button
+          type="submit"
           id="wd-save"
-          className="rounded bg-red-600 px-4 py-2 text-sm text-white no-underline hover:bg-red-700"
+          className="rounded bg-red-600 px-4 py-2 text-sm text-white hover:bg-red-700"
         >
           Save
-        </Link>
+        </button>}
       </div>
-    </div>
+      </fieldset>
+    </form>
   );
 }
