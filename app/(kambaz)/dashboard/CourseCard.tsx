@@ -1,13 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
+import type { ReactNode } from "react";
 import { useCoursesStore, type Course } from "../store/coursesStore";
 
 export default function CourseCard({
   course,
   onEdit,
+  canManage,
+  enrollmentAction,
 }: {
   course: Course;
   onEdit: () => void;
+  canManage: boolean;
+  enrollmentAction?: ReactNode;
 }) {
   const deleteCourse = useCoursesStore((state) => state.deleteCourse);
   return (
@@ -36,30 +41,36 @@ export default function CourseCard({
           >
             Go
           </button>
-          <button
-            type="button"
-            id="wd-edit-course-click"
-            className="ms-2 rounded bg-yellow-400 px-3 py-1.5 text-sm font-medium"
-            onClick={(event) => {
-              event.preventDefault();
-              onEdit();
-            }}
-          >
-            Edit
-          </button>
-          <button
-            type="button"
-            id="wd-delete-course-click"
-            className="ms-2 rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
-            onClick={(event) => {
-              event.preventDefault();
-              deleteCourse(course._id);
-            }}
-          >
-            Delete
-          </button>
+          {canManage && (
+            <>
+              <button
+                type="button"
+                id="wd-edit-course-click"
+                className="ms-2 rounded bg-yellow-400 px-3 py-1.5 text-sm font-medium"
+                onClick={(event) => {
+                  event.preventDefault();
+                  onEdit();
+                }}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                id="wd-delete-course-click"
+                className="ms-2 rounded bg-red-600 px-3 py-1.5 text-sm font-medium text-white"
+                onClick={(event) => {
+                  event.preventDefault();
+                  deleteCourse(course._id);
+                }}
+              >
+                Delete
+              </button>
+            </>
+          )}
         </div>
       </Link>
+
+      {enrollmentAction && <div className="px-4 pb-4">{enrollmentAction}</div>}
     </div>
   );
 }
