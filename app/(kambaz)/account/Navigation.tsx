@@ -2,45 +2,37 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAccountContext } from "./AccountContext";
 
 export default function AccountNavigation() {
+  const { currentUser } = useAccountContext();
   const pathname = usePathname();
+
+  const links = currentUser
+    ? [{ href: "/account/profile", label: "Profile" }]
+    : [
+        { href: "/account/signin", label: "Sign in" },
+        { href: "/account/signup", label: "Sign up" },
+      ];
 
   return (
     <div
       id="wd-account-navigation"
       className="wd list-group rounded-none text-lg"
     >
-      <Link
-        href="/account/signin"
-        className={
-          pathname === "/account/signin"
-            ? "list-group-item active border-0"
-            : "list-group-item border-0 text-red-600"
-        }
-      >
-        Sign in
-      </Link>
-      <Link
-        href="/account/signup"
-        className={
-          pathname === "/account/signup"
-            ? "list-group-item active border-0"
-            : "list-group-item border-0 text-red-600"
-        }
-      >
-        Sign up
-      </Link>
-      <Link
-        href="/account/profile"
-        className={
-          pathname === "/account/profile"
-            ? "list-group-item active border-0"
-            : "list-group-item border-0 text-red-600"
-        }
-      >
-        Profile
-      </Link>
+      {links.map(({ href, label }) => (
+        <Link
+          key={href}
+          href={href}
+          className={
+            pathname === href
+              ? "list-group-item active border-0"
+              : "list-group-item border-0 text-red-600"
+          }
+        >
+          {label}
+        </Link>
+      ))}
     </div>
   );
 }
